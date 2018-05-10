@@ -1,7 +1,7 @@
 #ifndef CONFIG_USER_H
 #define CONFIG_USER_H
 
-#include "../../config.h"
+#include "config_common.h"
 
 #define LSPO_KEY KC_LPRN  // Left space cadet shift - (
 #define RSPC_KEY KC_RPRN  // Right space cadet shift - )
