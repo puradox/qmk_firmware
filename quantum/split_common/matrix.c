@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stdint.h>
 #include <stdbool.h>
+#include <print.h>
 #include "wait.h"
 #include "util.h"
 #include "matrix.h"
