@@ -18,6 +18,9 @@
 // #define MASTER_RIGHT
 #define EE_HANDS
 
+#undef MATRIX_ROW_PINS
+#undef MATRIX_COL_PINS
+
 #define MATRIX_ROW_PINS { F5, F4, F1, F0 }
 #define MATRIX_ROW_PINS_RIGHT { B3, B2, B1, F4 }
 #define MATRIX_COL_PINS { D2, D3, C6, D7, B5, B6 }

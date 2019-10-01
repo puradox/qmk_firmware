@@ -18,7 +18,6 @@
 
 enum preonic_layers {
   _QWERTY,
-  // _MIDI,
   _LOWER,
   _RAISE,
   _ADJUST
@@ -26,7 +25,6 @@ enum preonic_layers {
 
 enum preonic_keycodes {
   QWERTY = SAFE_RANGE,
-  // MIDI,
   LOWER,
   RAISE,
 };
@@ -55,29 +53,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,  \
   KC_LGUI, KC_LCTL, KC_LALT, KC_RSFT, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
 ),
-
-/* MIDI
- * ,-----------------------------------------------------------------------------------.
- * |Qwerty|  C   |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Mod+ |  A   |  A#  |  B   |  C   |  G#  |  A#  |      |  C#  |  D#  |      |  F#  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Mod- |  F   |  F#  |  G   |  G#  |  G   |  A   |  B   |  C   |  D   |  E   |  F   |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Mod  |  C   |  C#  |  D   |  D#  |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Mod | Oct- | Oct+ | Mod- | Mod+ |All notes off| Tns- | Tns+ | Ch+  | Ch-  | Sust |
- * `-----------------------------------------------------------------------------------'
- */
-/*
-[_MIDI] = LAYOUT_preonic_grid( \
-  QWERTY,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  MI_MODSU,  MI_Cs,    MI_Ds,    _______,  MI_Fs,    MI_Gs,     MI_As,     _______,  MI_Cs_1,  MI_Ds_1,  _______,   MI_Fs_1, \
-  MI_MODSD,  MI_C,     MI_D,     MI_E,     MI_F,     MI_G,      MI_A,      MI_B,     MI_C_1,   MI_D_1,   MI_E_1,    MI_F_1,  \
-  MI_SUS,  _______,  _______,  _______,  _______,  _______,   _______,   _______,  _______,  _______,  _______,   MI_SUS,  \
-  MI_MOD, MI_OCTD,  MI_OCTU,  MI_MODSD, MI_MODSU, MI_ALLOFF, MI_ALLOFF, MI_TRNSD, MI_TRNSU, MI_CHU,   MI_CHD,    MI_SUS  \
-),
-*/
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
@@ -127,9 +102,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |  F11 |  F12 |Aud on|AudOff|AGnorm|AGswap|Qwerty|      |      |      |      |
+ * |      |  F11 |  F12 |Aud on|AudOff|      | Home | PgDn | PgUp | End  |      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|TER_ON|TER_OF|      |      |      |
+ * |      |Voice-|Voice+|Mus on|MusOff|AGnorm|AGswap|      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -137,8 +112,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = LAYOUT_preonic_grid( \
   RESET,   DEBUG,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
-  _______, KC_F11,  KC_F12,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  _______, _______, _______, _______, \
-  _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF, TERM_ON, TERM_OFF, _______, _______, _______, \
+  _______, KC_F11,  KC_F12,  AU_ON,   AU_OFF,  _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______, \
+  _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  AG_NORM, AG_SWAP, _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
 )
 
@@ -151,13 +126,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       set_single_persistent_default_layer(_QWERTY);
     }
     return false;
-  /*
-  case MIDI:
-    if (record->event.pressed) {
-      set_single_persistent_default_layer(_MIDI);
-    }
-    return false;
-  */
   case LOWER:
     if (record->event.pressed) {
       layer_on(_LOWER);
