@@ -12,12 +12,12 @@ enum atreus_keycodes {
     QWERTY = SAFE_RANGE,
     LOWER,
     RAISE,
-    ARROW,
 };
 
-#define CTL_ESC LCTL_T(KC_ESC) // CTL when held, Escape when tapped
-#define ALT_ENT LALT_T(KC_ENT) // ALT when held, Enter when tapped
-#define GUI_TAB LGUI_T(KC_TAB) // GUI when held, Tab when tapped
+#define CTL_ESC LCTL_T(KC_ESC)     // CTL when held, Escape when tapped
+#define ALT_ENT LALT_T(KC_ENT)     // ALT when held, Enter when tapped
+#define GUI_TAB LGUI_T(KC_TAB)     // GUI when held, Tab when tapped
+#define ARR_ENT LT(_ARROW, KC_ENT) // Arrow when held, Enter when tapped
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -28,15 +28,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |   A  |   S  |   D  |   F  |   G  |             |   H  |   J  |   K  |   L  |   ;  |
  * |------+------+------+------+------|------|------+------+------+------+------+------|
  * |   Z  |   X  |   C  |   V  |   B  |      |      |   N  |   M  |   ,  |   .  |   /  |
- * |------+------+------+------+------|Alt/En|Ctl/Es|------+------+------+------+------|
- * |GUI/Tb| Arrow| Shift| Lower| Bksp |      |      |Space |Raise |   '  |      |Enter |
+ * |------+------+------+------+------|Ctl/Es|Arr/En|------+------+------+------+------|
+ * |GUI/Tb|  Alt | Shift| Lower| Bksp |      |      |Space |Raise |   '  |      |      |
  * `---------------------------------------------------------------------+------+------'
  */
 [_QWERTY] = LAYOUT(
   KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,                      KC_Y,   KC_U,  KC_I,    KC_O,    KC_P    ,
   KC_A,    KC_S,    KC_D,    KC_F,  KC_G,                      KC_H,   KC_J,  KC_K,    KC_L,    KC_SCLN ,
   KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,                      KC_N,   KC_M,  KC_COMM, KC_DOT,  KC_SLSH ,
-  GUI_TAB, ARROW,   KC_LSFT, LOWER, KC_BSPC, ALT_ENT, CTL_ESC, KC_SPC, RAISE, KC_QUOT, _______, KC_ENT
+  GUI_TAB, KC_LALT, KC_LSFT, LOWER, KC_BSPC, CTL_ESC, ARR_ENT, KC_SPC, RAISE, KC_QUOT, _______, _______
 ),
 
 /* Lower
@@ -97,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,----------------------------------.             ,----------------------------------.
  * |      |      |      |      |      |             |      |      |      |      |      |
  * |------+------+------+------+------|             |------+------+------+------+------|
- * |      |      |      |      |      |             | Left | Down |  Up  | Right|      |
+ * |      |      |      |      |      |             | Left | Down |  Up  | Right| Enter|
  * |------+------+------+------+------|------|------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------|      |      |------+------+------+------+------|
@@ -106,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ARROW] = LAYOUT(
   _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______ ,
-  _______, _______, _______, _______, _______,                   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______ ,
+  _______, _______, _______, _______, _______,                   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_ENT  ,
   _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______ ,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
@@ -138,12 +138,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       update_tri_layer(_LOWER, _RAISE, _ADJUST);
     }
     return false;
-  case ARROW:
-    if (record->event.pressed) {
-        layer_on(_ARROW);
-    } else {
-        layer_off(_ARROW);
-    }
   }
   return true;
 };
