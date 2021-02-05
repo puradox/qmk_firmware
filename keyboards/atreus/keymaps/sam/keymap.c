@@ -19,6 +19,8 @@ enum atreus_keycodes {
 #define GUI_TAB LGUI_T(KC_TAB)     // GUI when held, Tab when tapped
 #define ARR_ENT LT(_ARROW, KC_ENT) // Arrow when held, Enter when tapped
 
+const uint8_t RGBLED_RAINBOW_SWIRL_INTERVALS[] PROGMEM = {1, 1, 1};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
